@@ -5,8 +5,11 @@ import csv
 class City:
     def __init__(self, name, lat, lon):
         self.name = name
-        self.lat = lat
-        self.long = lon
+        self.lat = float(lat)
+        self.long = float(lon)
+
+    def __repr__(self):
+        return (self.name, self.lat, self.lon)
 
 # We have a collection of US cities with population over 750,000 stored in the
 # file "cities.csv". (CSV stands for "comma-separated values".)
@@ -23,14 +26,26 @@ class City:
 cities = []
 
 def cityreader(cities=[]):
-    with open('cities.csv', 'r') as file:
-        print(file[0])
+    # open the file
+    csvFile = open('cities.csv')
 
-  # TODO Implement the functionality to read from the 'cities.csv' file
-  # For each city record, create a new City instance and add it to the 
-  # `cities` list
-    
-    # return cities
+    # Read the file
+    reader = csv.reader(csvFile)
+
+    # Get out all the data  
+    csvData = list(reader)
+
+    # Close the file
+    csvFile.close()
+
+    # Take out the first piece of data
+    csvData.pop(0)
+
+    for city in csvData:
+      cities.append(City(city[0], city[3], city[4]))
+          
+
+    return cities
 
 cityreader(cities)
 
